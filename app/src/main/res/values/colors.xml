@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF3100</color>
+    <color name="colorPrimaryDark">#F5E7562D</color>
+    <color name="colorAccent">#C2C2C2</color>
+    <color name="color_bg">#F5E7562D</color>
+    <color name="white">#fff</color>
+    <color name="rippleEffect">#C2C2C2</color>
+    <color name="blue">#304FFE</color>
+</resources>

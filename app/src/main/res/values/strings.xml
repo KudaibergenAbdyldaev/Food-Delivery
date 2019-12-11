@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">FoodDelivery</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_app_id">500701800565644</string>
+    <string name="fb_login_protocol_scheme">fb500701800565644</string>
+    <string name="enterPassword">Пароль должен содержать не менее 6 символов</string>
+    <string name="password_enter">Пожалуйста ведите пароль</string>
+    <string name="enter_phone">Пожалуйста ведите ваш номер телефона</string>
+    <string name="enter_name">Пожалуйста ведите ваше имя</string>
+    <string name="enter_email">Пожалуйста ведите ваш email</string>
+</resources>
