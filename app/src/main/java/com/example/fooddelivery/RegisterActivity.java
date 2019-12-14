@@ -28,10 +28,9 @@ import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText  email, username, phone, password;
+    EditText  email, username, phone, address, password;
     Button register;
     FirebaseAuth auth;
-    FirebaseDatabase db;
     DatabaseReference reference;
     TextView have_acc;
 
@@ -43,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.name);
         email = (EditText) findViewById(R.id.email);
         phone = (EditText) findViewById(R.id.phone);
+        address = (EditText) findViewById(R.id.address);
         password = (EditText) findViewById(R.id.password);
 
         have_acc = (TextView) findViewById(R.id.have_acc);
@@ -61,6 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String txt_username = username.getText().toString();
                 String txt_email = email.getText().toString();
                 String txt_phone = phone.getText().toString();
+                String txt_address = address.getText().toString();
                 String txt_password = password.getText().toString();
 
                 if(TextUtils.isEmpty(email.getText().toString())){
@@ -78,6 +79,11 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
+                else if(TextUtils.isEmpty(address.getText().toString())){
+                    Toast.makeText(RegisterActivity.this, "Пожалуйста ведите ваш адресс", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 else if(TextUtils.isEmpty(password.getText().toString())){
                     Toast.makeText(RegisterActivity.this, "Пожалуйста ведите пароль", Toast.LENGTH_SHORT).show();
                     return;
@@ -88,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
 
                 }else {
-                    register(txt_username, txt_email, txt_phone, txt_password);
+                    register(txt_username, txt_email, txt_phone, txt_address, txt_password);
                 }
 
             }
@@ -96,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void register(final String username, String email, final String phone, String password){
+    private void register(final String username, String email, final String phone, final String address, String password){
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -111,6 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
                             HashMap<String, String> map = new HashMap<>();
                             map.put("id", userId);
                             map.put("username", username);
+                            map.put("address", address);
                             map.put("phone", phone);
 
                             reference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -8,9 +8,12 @@
     tools:context=".Fragments.MenuFragment">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_user_info"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:elevation="0dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginTop="10dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -19,15 +22,18 @@
                 android:layout_width="76dp"
                 android:layout_height="76dp"
                 android:id="@+id/profile_image"
+                android:src="@drawable/user"
                 android:layout_margin="8dp"/>
 
             <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/profile_image"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:text="User Name"
+                android:text=""
+                android:textColor="#000000"
                 android:textSize="24sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
@@ -36,6 +42,8 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:elevation="0dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginTop="10dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -55,6 +63,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/img_fav"
                 android:layout_marginLeft="10dp"
+                android:textColor="#000000"
                 android:text="Избранные"
                 android:textSize="24sp" />
         </RelativeLayout>
@@ -63,6 +72,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:elevation="0dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -81,8 +92,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/img_history"
+                android:textColor="#000000"
                 android:layout_marginLeft="10dp"
-                android:text="История Заказов"
+                android:text="История заказов"
                 android:textSize="24sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
@@ -90,6 +102,38 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:elevation="0dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/img_change_address"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_action_address_change"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/img_change_address"
+                android:textColor="#000000"
+                android:layout_marginLeft="10dp"
+                android:text="Изменить аддресс"
+                android:textSize="24sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:elevation="0dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -109,14 +153,18 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/img_delivery"
                 android:layout_marginLeft="10dp"
+                android:textColor="#000000"
                 android:text="Приложение для курьеров"
                 android:textSize="24sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_logout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:elevation="0dp">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -136,6 +184,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/img_logout"
                 android:layout_marginLeft="10dp"
+                android:textColor="#000000"
                 android:text="Выйти"
                 android:textSize="24sp" />
         </RelativeLayout>

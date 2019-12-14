@@ -13,13 +13,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:layout_marginTop="100dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/delivery"/>
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -42,7 +43,6 @@
                 android:ems="10"
                 android:text=""
                 android:hint="Ваш E-Mail"
-                android:layout_marginTop="30dp"
                 android:paddingLeft="10dp"
                 android:backgroundTint="@color/white"
                 android:textColorHint="@color/white"
@@ -82,12 +82,27 @@
                 android:inputType="numberDecimal" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:text=""
                 android:layout_below="@+id/phone"
+                android:hint="Ваш Адресс"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:backgroundTint="@color/white"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text=""
+                android:layout_below="@+id/address"
                 android:hint="Ваш Пароль"
                 android:layout_marginTop="10dp"
                 android:paddingLeft="10dp"
