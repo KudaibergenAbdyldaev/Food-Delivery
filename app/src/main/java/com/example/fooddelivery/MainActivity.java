@@ -2,7 +2,6 @@ package com.example.fooddelivery;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
@@ -11,7 +10,7 @@ import android.view.MenuItem;
 import com.example.fooddelivery.Fragments.BasketFragment;
 import com.example.fooddelivery.Fragments.HomeFragment;
 import com.example.fooddelivery.Fragments.MenuFragment;
-import com.example.fooddelivery.Fragments.SearchFragment;
+import com.example.fooddelivery.Fragments.FavouriteFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,9 +22,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Food Delivery");
+
 
         //I added this if statement to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
@@ -45,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new HomeFragment();
                             break;
                         case R.id.nav_search:
-                            selectedFragment = new SearchFragment();
+                            selectedFragment = new FavouriteFragment();
                             break;
                         case R.id.nav_basket:
                             selectedFragment = new BasketFragment();

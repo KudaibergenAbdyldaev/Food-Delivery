@@ -6,10 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/bar_layout">
-    </include>
+
 
     <FrameLayout
         android:id="@+id/fragment_container"

@@ -6,12 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/bar_layout">
+    </include>
+
     <ImageView
         android:id="@+id/img"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:layout_below="@+id/toolbar"/>
 
 
 
@@ -109,9 +115,9 @@
     </LinearLayout>
     <Button
         android:id="@+id/add_basket"
-        android:layout_width="200dp"
+        android:layout_width="225dp"
         android:layout_height="wrap_content"
-        android:text="ЗАКАЗАТЬ"
+        android:text="добавить в корзину"
         android:textColor="@color/colorPrimary"
         android:background="@drawable/btn_signin_background"
         android:layout_alignParentBottom="true"

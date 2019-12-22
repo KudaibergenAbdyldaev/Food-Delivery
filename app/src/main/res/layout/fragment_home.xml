@@ -5,18 +5,22 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.HomeFragment">
-
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/bar_layout"/>
     <LinearLayout
+        android:id="@+id/horizontal_lin"
+        android:layout_below="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <HorizontalScrollView
             android:id="@+id/horizontalScrollView"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_height="40dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:scrollIndicators="start">
+            android:fillViewport="true"
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -24,8 +28,11 @@
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_baking"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:layout_margin="5dp"
                     app:cardCornerRadius="20dp">
 
@@ -41,10 +48,13 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_meat"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:layout_margin="5dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardCornerRadius="20dp"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -59,10 +69,13 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_milk"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:layout_margin="5dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardCornerRadius="20dp"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -77,10 +90,13 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/card_drinks"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
                     android:layout_margin="5dp"
-                    app:cardCornerRadius="20dp">
+                    app:cardCornerRadius="20dp"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -94,8 +110,11 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/dessert"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="30dp"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_margin="5dp"
                     app:cardCornerRadius="20dp">
 
@@ -112,5 +131,18 @@
 
             </LinearLayout>
         </HorizontalScrollView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/horizontal_lin">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
     </LinearLayout>
 </RelativeLayout>

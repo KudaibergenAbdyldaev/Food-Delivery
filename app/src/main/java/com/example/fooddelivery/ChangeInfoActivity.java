@@ -54,11 +54,11 @@ public class ChangeInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_info);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Food Delivery");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setTitle("Food Delivery");
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//
         mButtonChooseImage = findViewById(R.id.button_choose_image);
         mButtonUpload = findViewById(R.id.button_upload);
         mEditTextFileName = findViewById(R.id.edit_text_file_name);
@@ -67,8 +67,8 @@ public class ChangeInfoActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.image_view);
         mProgressBar = findViewById(R.id.progress_bar);
 
-        mStorageRef = FirebaseStorage.getInstance().getReference("uploads").child("food").child("drinks");
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").child("food").child("drinks");
+        mStorageRef = FirebaseStorage.getInstance().getReference("uploads").child("food").child("dessert");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads").child("food").child("dessert");
 
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,7 +103,7 @@ public class ChangeInfoActivity extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
-
+//
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -162,5 +162,7 @@ public class ChangeInfoActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
+//    }
+
     }
 }
