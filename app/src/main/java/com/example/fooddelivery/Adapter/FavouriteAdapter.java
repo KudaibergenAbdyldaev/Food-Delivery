@@ -19,8 +19,11 @@ import com.example.fooddelivery.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -33,6 +36,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
     StorageReference storageReference;
     DatabaseReference reference;
     List<FavouriteModel> products = new ArrayList<>();
+    FirebaseUser user;
 
     private Context context;
     private List<FavouriteModel> uploadList;
@@ -46,6 +50,26 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_favourite, parent, false);
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket").child(user.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                products.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    FavouriteModel addToBasket = postSnapshot.getValue(FavouriteModel.class);
+
+
+                    products.add(addToBasket);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         return new FavouriteAdapter.Holder(view);
     }
 
@@ -64,8 +88,8 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
             @Override
             public void onClick(View view) {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                storageReference = FirebaseStorage.getInstance().getReference("uploads").child("favourite");
-                reference = FirebaseDatabase.getInstance().getReference("uploads").child("favourite");
+                storageReference = FirebaseStorage.getInstance().getReference("uploads").child("basket");
+                reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket");
                 FavouriteModel addToBasket = new FavouriteModel(
                         uploadList.get(position).getmName(),
                         uploadList.get(position).getPrice(),

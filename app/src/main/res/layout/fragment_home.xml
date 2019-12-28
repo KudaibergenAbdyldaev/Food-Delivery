@@ -37,6 +37,7 @@
                     app:cardCornerRadius="20dp">
 
                     <TextView
+                        android:id="@+id/txt_baking"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -57,6 +58,7 @@
                     android:foreground="?android:attr/selectableItemBackground">
 
                     <TextView
+                        android:id="@+id/txt_meat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -78,6 +80,7 @@
                     android:foreground="?android:attr/selectableItemBackground">
 
                     <TextView
+                        android:id="@+id/txt_milk"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -99,6 +102,7 @@
                     android:foreground="?android:attr/selectableItemBackground">
 
                     <TextView
+                        android:id="@+id/txt_drinks"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -119,6 +123,7 @@
                     app:cardCornerRadius="20dp">
 
                     <TextView
+                        android:id="@+id/txt_dessert"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

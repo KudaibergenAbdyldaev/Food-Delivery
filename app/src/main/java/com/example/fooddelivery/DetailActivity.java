@@ -38,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
-    TextView title, overView, price;
+    TextView title, overView, price,txt_count;
     ImageView imageView;
     Button btn_order;
     DatabaseReference reference;
@@ -64,12 +64,14 @@ public class DetailActivity extends AppCompatActivity {
         price = (TextView) findViewById(R.id.price_value);
         imageView = (ImageView) findViewById(R.id.img);
         btn_order = (Button) findViewById(R.id.add_basket);
+        txt_count = (TextView) findViewById(R.id.txt_count);
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addToBasket();
             }
         });
+
 
         final Intent intent = getIntent();
 

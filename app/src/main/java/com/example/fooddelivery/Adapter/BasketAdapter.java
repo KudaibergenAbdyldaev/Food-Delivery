@@ -4,21 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.fooddelivery.Models.AddToBasket;
-import com.example.fooddelivery.Models.OrderModel;
-import com.example.fooddelivery.Models.Upload;
 import com.example.fooddelivery.R;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
@@ -35,7 +26,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
     DatabaseReference reference;
     private Context context;
     private List<AddToBasket> basketList;
-    private List<OrderModel> orderModelList = new ArrayList<>();
+//    private int count = 0;
 
     public BasketAdapter(Context context, List<AddToBasket> basketList) {
         this.context = context;
@@ -55,6 +46,17 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
         holder.txt_name.setText(addToBasket.getmName());
         holder.txt_price.setText(addToBasket.getPrice());
         Picasso.get().load(basketList.get(position).getImageUrl()).into(holder.imageView);
+
+//        holder.txt_plus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                cnt=(TextView) item.findViewById(R.id.textView); //cnt - обьект "надпись"
+////                CharSequence zz = cnt.getText(); // получем содержимое обьекта
+////                int pz= Integer.valueOf(zz.toString()); // преобразовываем в число
+////                pz++; // прибавляем 1
+////                cnt.setText(Integer.toString(pz)); // преобразовываем в строку и возвращаем в обьект "надпись"
+//            }
+//        });
 
 //        holder.btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -94,7 +96,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
     public class Holder extends RecyclerView.ViewHolder {
 
 //        public Button btn;
-        public TextView txt_name, txt_price, txt_amount;
+        public TextView txt_name, txt_price, txt_amount, txt_minus, txt_plus;
         public ImageView imageView;
         public CardView cardView;
 
@@ -106,6 +108,8 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
             txt_amount = itemView.findViewById(R.id.txt_count);
             imageView = itemView.findViewById(R.id.img_basket);
             cardView = itemView.findViewById(R.id.card_basket);
+            txt_minus = itemView.findViewById(R.id.txt_minus);
+            txt_plus = itemView.findViewById(R.id.txt_plus);
 //            btn = itemView.findViewById(R.id.btn_order);
         }
     }

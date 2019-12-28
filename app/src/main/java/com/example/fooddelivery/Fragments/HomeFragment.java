@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fooddelivery.Adapter.FoodAdapter;
@@ -26,6 +27,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -41,6 +44,7 @@ public class HomeFragment extends Fragment {
     CardView card_add_product;
     private DatabaseReference databaseReference;
     private List<Upload> uploadList;
+    private TextView txt_baking, txt_meat, txt_milk, txt_drink, txt_dessert;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,11 +60,15 @@ public class HomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
 
+        txt_baking = (TextView) view.findViewById(R.id.txt_baking);
+        txt_meat = (TextView) view.findViewById(R.id.txt_meat);
+        txt_milk = (TextView) view.findViewById(R.id.txt_milk);
+        txt_drink = (TextView) view.findViewById(R.id.txt_drinks);
+        txt_dessert = (TextView) view.findViewById(R.id.txt_dessert);
+
         uploadList = new ArrayList<>();
 
         getFirstCategory();
-
-
 
         card_baking = (CardView) view.findViewById(R.id.card_baking);
         card_baking.setOnClickListener(new View.OnClickListener() {
@@ -68,10 +76,23 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 databaseReference = FirebaseDatabase.getInstance().getReference("uploads").child("food").child("baking");
 
+                txt_baking.setTextColor(getResources().getColor(R.color.white));
+                card_baking.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                txt_meat.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_meat.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_milk.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_milk.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_drink.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_drinks.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_dessert.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_dessert.setCardBackgroundColor(getResources().getColor(R.color.white));
+
                 final List<Upload> finalUploadList = uploadList;
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        uploadList.clear();
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Upload upload = postSnapshot.getValue(Upload.class);
                             finalUploadList.add(upload);
@@ -95,11 +116,24 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 databaseReference = FirebaseDatabase.getInstance().getReference("uploads").child("food").child("meat");
 
+                txt_meat.setTextColor(getResources().getColor(R.color.white));
+                card_meat.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                txt_baking.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_baking.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_milk.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_milk.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_drink.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_drinks.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_dessert.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_dessert.setCardBackgroundColor(getResources().getColor(R.color.white));
+
                 final List<Upload> finalUploadList = uploadList;
 
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        uploadList.clear();
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Upload upload = postSnapshot.getValue(Upload.class);
                             finalUploadList.add(upload);
@@ -123,12 +157,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 databaseReference = FirebaseDatabase.getInstance().getReference("uploads").child("food").child("milk");
+                txt_milk.setTextColor(getResources().getColor(R.color.white));
+                card_milk.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
+                txt_meat.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_meat.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_baking.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_baking.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_drink.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_drinks.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_dessert.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_dessert.setCardBackgroundColor(getResources().getColor(R.color.white));
 
                 final List<Upload> finalUploadList = uploadList;
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        uploadList.clear();
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Upload upload = postSnapshot.getValue(Upload.class);
                             finalUploadList.add(upload);
@@ -152,11 +197,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 databaseReference = FirebaseDatabase.getInstance().getReference("uploads").child("food").child("drinks");
+                txt_drink.setTextColor(getResources().getColor(R.color.white));
+                card_drinks.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+                txt_milk.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_milk.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_meat.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_meat.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_baking.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_baking.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_dessert.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_dessert.setCardBackgroundColor(getResources().getColor(R.color.white));
 
                 final List<Upload> finalUploadList = uploadList;
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        uploadList.clear();
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Upload upload = postSnapshot.getValue(Upload.class);
                             finalUploadList.add(upload);
@@ -180,12 +237,23 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 databaseReference = FirebaseDatabase.getInstance().getReference("uploads").child("food").child("dessert");
+                txt_dessert.setTextColor(getResources().getColor(R.color.white));
+                card_dessert.setCardBackgroundColor(getResources().getColor(R.color.colorPrimary));
 
+                txt_drink.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_drinks.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_milk.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_milk.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_meat.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_meat.setCardBackgroundColor(getResources().getColor(R.color.white));
+                txt_baking.setTextColor(getResources().getColor(R.color.colorPrimary));
+                card_baking.setCardBackgroundColor(getResources().getColor(R.color.white));
 
                 final List<Upload> finalUploadList = uploadList;
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        uploadList.clear();
                         for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                             Upload upload = postSnapshot.getValue(Upload.class);
                             finalUploadList.add(upload);
@@ -217,6 +285,7 @@ public class HomeFragment extends Fragment {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                uploadList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Upload upload = postSnapshot.getValue(Upload.class);
                     finalUploadList.add(upload);
