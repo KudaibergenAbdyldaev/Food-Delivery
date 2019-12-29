@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".Fragments.BasketFragment">
 
@@ -24,14 +25,15 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:id="@+id/relative_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="175dp"
+        android:layout_alignParentBottom="true">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_height="wrap_content"
+        >
 
 
         <TextView
@@ -41,6 +43,7 @@
             android:layout_marginLeft="10dp"
             android:text="Сумма блюд"
             android:textColor="#000"
+            android:layout_marginTop="10dp"
             android:textSize="18sp" />
 
         <TextView
@@ -52,6 +55,7 @@
             android:layout_marginRight="20dp"
             android:text="1100coм"
             android:textColor="#000"
+            android:layout_marginTop="10dp"
             android:textSize="18sp" />
 
         <TextView
@@ -104,13 +108,15 @@
             android:id="@+id/btn_order"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="120dp"
             android:layout_marginRight="6dp"
             android:background="@drawable/btn_add_bg"
             android:text="Заказать"
             android:textColor="@android:color/white"
+            android:layout_marginBottom="10dp"
             android:textSize="16sp" />
     </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
 </RelativeLayout>

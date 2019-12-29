@@ -67,7 +67,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     FavouriteModel favouriteModel = postSnapshot.getValue(FavouriteModel.class);
 
-
                     favouriteModelList.add(favouriteModel);
                 }
             }
@@ -86,7 +85,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
                 products.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     AddToBasket addToBasket = postSnapshot.getValue(AddToBasket.class);
-
 
                     products.add(addToBasket);
                 }
