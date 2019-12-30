@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.fooddelivery.ChangeActivity;
 import com.example.fooddelivery.LoginActivity;
 import com.example.fooddelivery.Models.UserInfo;
 import com.example.fooddelivery.R;
@@ -29,7 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 public class MenuFragment extends Fragment {
 
-    CardView card_user_info, card_logout;
+    CardView card_user_info, card_logout, card_change_address;
     private TextView txt_username;
 
     FirebaseUser firebaseUser;
@@ -51,6 +53,14 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 showQuitDialog();
+            }
+        });
+
+        card_change_address = (CardView) view.findViewById(R.id.card_change_address);
+        card_change_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ChangeActivity.class));
             }
         });
 

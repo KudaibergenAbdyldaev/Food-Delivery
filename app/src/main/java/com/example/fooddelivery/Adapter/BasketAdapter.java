@@ -69,6 +69,18 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
         holder.txt_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                DatabaseReference reference = FirebaseDatabase
+                        .getInstance()
+                        .getReference("uploads")
+                        .child("basket")
+                        .child(user.getUid())
+                        .child("amount");
+
+
+
                 CharSequence zz = holder.txt_amount.getText();
                 int pz= Integer.valueOf(zz.toString());
                 pz++;

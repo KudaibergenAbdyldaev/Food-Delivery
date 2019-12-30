@@ -5,6 +5,10 @@ public class AddToBasket {
     private String mName;
     private String price;
     private String imageUrl;
+    private String amount;
+    private String addressToDeliver;
+    private String clientName;
+    private String clientPhone;
 
     public AddToBasket(String mName, String price, String imageUrl) {
         this.mName = mName;
@@ -13,6 +17,38 @@ public class AddToBasket {
     }
 
     public AddToBasket() {
+    }
+
+    public String getAddressToDeliver() {
+        return addressToDeliver;
+    }
+
+    public void setAddressToDeliver(String addressToDeliver) {
+        this.addressToDeliver = addressToDeliver;
+    }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getClientPhone() {
+        return clientPhone;
+    }
+
+    public void setClientPhone(String clientPhone) {
+        this.clientPhone = clientPhone;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
     public String getmName() {

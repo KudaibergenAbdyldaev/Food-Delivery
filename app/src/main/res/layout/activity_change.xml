@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChangeActivity">
+    <include
+        android:id="@+id/toolbar_change"
+        layout="@layout/bar_layout"/>
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Ваш прежний аддресс"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/rippleEffect"
+        android:layout_below="@+id/toolbar_change"/>
+
+    <TextView
+        android:id="@+id/txt_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/address"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/new_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="Ваш новый аддресс"
+        android:layout_below="@+id/txt_address"
+        android:textColor="@color/rippleEffect"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
+    <EditText
+        android:id="@+id/edt_new_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/new_address"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:backgroundTint="@color/black"
+        android:textColorHint="@color/rippleEffect"
+        android:textColor="@color/black"
+        android:hint="Введите новый аддресс"/>
+
+    <Button
+        android:id="@+id/btn_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Изменить аддресс"
+        android:background="@drawable/btn_add_bg"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"/>
+
+
+</RelativeLayout>

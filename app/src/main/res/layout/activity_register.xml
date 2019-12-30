@@ -19,7 +19,7 @@
             android:scaleType="centerCrop"
             android:layout_marginTop="100dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/delivery"/>
+            android:src="@drawable/delivery_png"/>
 
 
         <TextView

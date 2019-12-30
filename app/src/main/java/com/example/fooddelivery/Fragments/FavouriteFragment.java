@@ -37,8 +37,6 @@ public class FavouriteFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private FavouriteAdapter adapter;
-    private CardView card_baking, card_dessert, card_drinks, card_meat, card_milk;
-    CardView card_add_product;
     private DatabaseReference databaseReference;
     private List<FavouriteModel> uploadList;
 

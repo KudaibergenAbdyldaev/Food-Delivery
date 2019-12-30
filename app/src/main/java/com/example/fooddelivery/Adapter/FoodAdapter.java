@@ -29,6 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -123,6 +124,9 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
                         uploadList.get(position).getPrice(),
                         uploadList.get(position).getmImageUrl()
                 );
+
+                addToBasket.setAmount("1");
+
                 products.add(addToBasket);
                 reference.child(user.getUid())
                         .setValue(products)
@@ -132,8 +136,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
                                 Toast.makeText(context, "Блюдо добавлено в корзину", Toast.LENGTH_SHORT).show();
                             }
                         });
-
-
             }
         });
 
