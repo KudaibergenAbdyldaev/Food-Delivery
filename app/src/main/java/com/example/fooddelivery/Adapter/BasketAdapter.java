@@ -60,7 +60,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
             public void onClick(View v) {
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("uploads")
-                        .child("basket").child(user.getUid());
+                        .child("basket").child(user.getUid()).child(" ");
                 mPostReference.removeValue();
 
             }
@@ -78,9 +78,7 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
                         .child("basket")
                         .child(user.getUid())
                         .child("amount");
-
-
-
+                
                 CharSequence zz = holder.txt_amount.getText();
                 int pz= Integer.valueOf(zz.toString());
                 pz++;

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.fooddelivery.ChangeActivity;
+import com.example.fooddelivery.HistoryActivity;
 import com.example.fooddelivery.LoginActivity;
 import com.example.fooddelivery.Models.UserInfo;
 import com.example.fooddelivery.R;
@@ -31,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 public class MenuFragment extends Fragment {
 
-    CardView card_user_info, card_logout, card_change_address;
+    CardView card_user_info, card_logout, card_change_address, card_history;
     private TextView txt_username;
 
     FirebaseUser firebaseUser;
@@ -46,6 +47,14 @@ public class MenuFragment extends Fragment {
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).setTitle("Food Delivery");
+
+        card_history = (CardView) view.findViewById(R.id.card_history);
+        card_history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), HistoryActivity.class));
+            }
+        });
 
         txt_username = (TextView) view.findViewById(R.id.username);
         card_logout = (CardView) view.findViewById(R.id.card_logout);

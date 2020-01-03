@@ -112,35 +112,6 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
             }
         });
 
-//        holder.card_favourite.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//                storageReference = FirebaseStorage.getInstance().getReference("uploads").child("favourite");
-//                reference = FirebaseDatabase.getInstance().getReference("uploads").child("favourite");
-//                AddToBasket addToBasket = new AddToBasket(
-//                        uploadList.get(position).getmName(),
-//                        uploadList.get(position).getPrice(),
-//                        uploadList.get(position).getmImageUrl()
-//                );
-//                products.add(addToBasket);
-//                if (!products.isEmpty()) {
-//                    reference.child(user.getUid())
-//                            .setValue(products)
-//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                @Override
-//                                public void onSuccess(Void aVoid) {
-//                                    Toast.makeText(context, "Блюдо добавлено в избранные", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-//                } else {
-//                    Toast.makeText(context, "Basket is empty", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        });
-
     }
 
     @Override

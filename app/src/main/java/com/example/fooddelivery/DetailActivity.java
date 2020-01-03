@@ -24,8 +24,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -45,6 +48,7 @@ public class DetailActivity extends AppCompatActivity {
     StorageReference storageReference;
     String image_url;
     List<AddToBasket> products = new ArrayList<>();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,23 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket").child(user.getUid());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                products.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    AddToBasket addToBasket = postSnapshot.getValue(AddToBasket.class);
+
+                    products.add(addToBasket);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         final Intent intent = getIntent();
 
@@ -90,7 +111,7 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     private void addToBasket() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         storageReference = FirebaseStorage.getInstance().getReference("uploads").child("basket");
         reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket");
         AddToBasket addToBasket = new AddToBasket(
@@ -98,13 +119,16 @@ public class DetailActivity extends AppCompatActivity {
                 price.getText().toString(),
                 image_url
         );
+
+        addToBasket.setAmount("1");
+
         products.add(addToBasket);
         reference.child(user.getUid())
                 .setValue(products)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(DetailActivity.this, "Бюдо добавлено в корзину", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailActivity.this, "Блюдо добавлено в корзину", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

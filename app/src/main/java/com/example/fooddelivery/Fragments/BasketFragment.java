@@ -43,10 +43,14 @@ public class BasketFragment extends Fragment {
     private RecyclerView recyclerView;
     private DatabaseReference databaseReference;
     private List<AddToBasket> addToBasketsList;
+    private List<UserInfo> infos;
     FirebaseUser user;
     TextView title,amount,price;
     ImageView imageView;
     Button button_order;
+    final String[] addressToDeliver = new String[1];
+    final String[] clientName = new String[1];
+    final String[] clientPhone = new String[1];
 
 
     @Override
@@ -63,11 +67,10 @@ public class BasketFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         user = FirebaseAuth.getInstance().getCurrentUser();
 
-        final String[] addressToDeliver = new String[1];
-        final String[] clientName = new String[1];
-        final String[] clientPhone = new String[1];
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
+        final DatabaseReference reference = FirebaseDatabase
+                .getInstance()
+                .getReference("Users")
                 .child(user.getUid());
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -78,7 +81,11 @@ public class BasketFragment extends Fragment {
                 addressToDeliver[0] = userInfo.getAddress();
                 clientName[0] = userInfo.getUsername();
                 clientPhone[0] = userInfo.getPhone();
-                Toast.makeText(getContext(), "address: " + addressToDeliver[0], Toast.LENGTH_LONG).show();
+
+                getFirstCategory(addressToDeliver[0], clientName[0], clientPhone[0]);
+
+
+//                Toast.makeText(getContext(), "address: " + addressToDeliver[0], Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -102,7 +109,7 @@ public class BasketFragment extends Fragment {
         });
 
         addToBasketsList = new ArrayList<>();
-        getFirstCategory(addressToDeliver[0], clientName[0], clientPhone[0]);
+
         return view;
     }
 
@@ -115,6 +122,8 @@ public class BasketFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Order");
 //        String userId = databaseReference.push().getKey();
+
+
         reference.child(user.getUid())
                 .setValue(addToBasketsList)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -125,7 +134,7 @@ public class BasketFragment extends Fragment {
                 });
     }
 
-    private void getFirstCategory(final String addressToDeliver, final String clientName, final String clientPhone){
+    private void getFirstCategory(final String address, final String name, final String phone){
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("uploads").child("basket").child(user.getUid());
 
@@ -134,11 +143,11 @@ public class BasketFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     AddToBasket addToBasket = postSnapshot.getValue(AddToBasket.class);
-                    assert addToBasket != null;
-                    Toast.makeText(getContext(),"Address to deliver: "+ addressToDeliver, Toast.LENGTH_LONG).show();
-                    addToBasket.setAddressToDeliver(addressToDeliver);
-                    addToBasket.setClientName(clientName);
-                    addToBasket.setClientPhone(clientPhone);
+//                    assert addToBasket != null;
+//                    Toast.makeText(getContext(),"Address to deliver: "+ addressToDeliver[0], Toast.LENGTH_LONG).show();
+                    addToBasket.setAddressToDeliver(address);
+                    addToBasket.setClientName(name);
+                    addToBasket.setClientPhone(phone);
 
                     addToBasketsList.add(addToBasket);
                 }
