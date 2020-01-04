@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
-        android:layout_above="@+id/relative_layout">
+        android:layout_above="@+id/btn_order">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view_basket"
@@ -24,99 +24,19 @@
             />
 
     </RelativeLayout>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/relative_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="175dp"
-        android:layout_alignParentBottom="true">
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_order"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        >
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="6dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/btn_add_bg"
+        android:text="Заказать"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="10dp"
+        android:textSize="16sp" />
 
-
-        <TextView
-            android:id="@+id/summa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Сумма блюд"
-            android:textColor="#000"
-            android:layout_marginTop="10dp"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/price0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:text="1100coм"
-            android:textColor="#000"
-            android:layout_marginTop="10dp"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/delivery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/summa"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Доставка"
-            android:textColor="#000"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/delevery_com"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/price0"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:text="150сом"
-            android:textColor="#000"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/delivery"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="Общая сумма"
-            android:textColor="#000"
-            android:textSize="18sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/delevery_com"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
-            android:text="1250сом"
-            android:textColor="#000"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/btn_order"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="120dp"
-            android:layout_marginRight="6dp"
-            android:background="@drawable/btn_add_bg"
-            android:text="Заказать"
-            android:textColor="@android:color/white"
-            android:layout_marginBottom="10dp"
-            android:textSize="16sp" />
-    </RelativeLayout>
-    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.Models.AddToBasket;
@@ -30,6 +31,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static androidx.core.content.ContextCompat.getColor;
 
 public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Holder> {
 
@@ -74,7 +77,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Holder holder, final int position) {
+    public void onBindViewHolder(@NonNull final Holder holder, final int position) {
         final FavouriteModel uploadCurrent = uploadList.get(position);
         holder.txt_name.setText(uploadCurrent.getmName());
         holder.txt_price.setText(uploadCurrent.getPrice());
@@ -87,6 +90,8 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
         holder.card_add_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.card_add_product.setCardBackgroundColor(getColor(context, R.color.colorPrimary));
+                holder.img_plus.setColorFilter(getColor(context, R.color.white));
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 storageReference = FirebaseStorage.getInstance().getReference("uploads").child("basket");
                 reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket");
@@ -95,6 +100,8 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
                         uploadList.get(position).getPrice(),
                         uploadList.get(position).getImageUrl()
                 );
+                addToBasket.setAmount("1");
+
                 products.add(addToBasket);
                 if (!products.isEmpty()) {
                     reference.child(user.getUid())
@@ -124,6 +131,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
         public TextView txt_name, txt_price;
         public ImageView imageView;
         public CardView card_add_product, cardView, card_favourite;
+        public ImageView img_plus;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -134,6 +142,7 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
             card_add_product = itemView.findViewById(R.id.add_product_item);
             cardView = itemView.findViewById(R.id.card_view_item);
             card_favourite = itemView.findViewById(R.id.add_favourite_item);
+            img_plus = itemView.findViewById(R.id.img_plus);
 
         }
     }

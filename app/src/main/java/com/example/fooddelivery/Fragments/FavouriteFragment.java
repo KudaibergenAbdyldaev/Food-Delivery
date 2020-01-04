@@ -3,6 +3,7 @@ package com.example.fooddelivery.Fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -82,5 +86,29 @@ public class FavouriteFragment extends Fragment {
 
 
         return view;
+    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.close_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.delete_item){
+            FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("uploads")
+                    .child("favourite").child(user.getUid());
+            mPostReference.removeValue();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

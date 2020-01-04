@@ -36,7 +36,7 @@ public class ChangeActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar_change);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Изменить аддресс");
+        getSupportActionBar().setTitle("Изменить адрес");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
@@ -49,14 +49,14 @@ public class ChangeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(TextUtils.isEmpty(edt_change.getText().toString())){
-                    Toast.makeText(ChangeActivity.this, "Пожалуйста ведите новый аддрес", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangeActivity.this, "Пожалуйста введите новый аддрес", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 reference = FirebaseDatabase.getInstance().getReference("Users").child(user.getUid()).child("address");
                 reference.setValue(edt_change.getText().toString());
-                Toast.makeText(ChangeActivity.this, "Аддресс изменен!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChangeActivity.this, "Адрес изменен!", Toast.LENGTH_SHORT).show();
             }
         });
 

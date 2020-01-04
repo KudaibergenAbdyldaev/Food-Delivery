@@ -111,6 +111,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
                 .centerCrop()
                 .into(holder.imageView);
 
+
         holder.card_add_product.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,6 +144,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
             @Override
             public void onClick(View v) {
 
+                holder.img_fav.setImageResource(R.drawable.ic_favorite_24dp);
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 storageReference = FirebaseStorage.getInstance().getReference("uploads").child("favourite");
                 reference = FirebaseDatabase.getInstance().getReference("uploads").child("favourite");
@@ -192,15 +194,16 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
 
     public class FoodHolder extends RecyclerView.ViewHolder {
 
-        public Button btn;
+
         public TextView txt_name, txt_price;
-        public ImageView imageView;
+        public ImageView imageView, img_fav;
         public CardView card_add_product, cardView, card_favourite;
         public ImageView img_plus;
 
         public FoodHolder(@NonNull View itemView) {
             super(itemView);
 
+            img_fav = itemView.findViewById(R.id.add_favourite_item);
             txt_name = itemView.findViewById(R.id.name_product);
             txt_price = itemView.findViewById(R.id.price);
             imageView = itemView.findViewById(R.id.img);

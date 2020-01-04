@@ -1,12 +1,17 @@
 package com.example.fooddelivery.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.fooddelivery.DetailActivity;
+import com.example.fooddelivery.Fragments.BasketFragment;
 import com.example.fooddelivery.Models.AddToBasket;
 import com.example.fooddelivery.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +26,8 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -29,12 +36,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
 
-    StorageReference storageReference;
-    DatabaseReference reference;
     private Context context;
     private List<AddToBasket> basketList;
-    FirebaseUser user;
-//    private int count = 0;
+    public int count;
 
     public BasketAdapter(Context context, List<AddToBasket> basketList) {
         this.context = context;
@@ -53,18 +57,14 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
         final AddToBasket addToBasket = basketList.get(position);
         holder.txt_name.setText(addToBasket.getmName());
         holder.txt_price.setText(addToBasket.getPrice());
+        holder.txt_amount.setText(addToBasket.getAmount());
         Picasso.get().load(basketList.get(position).getImageUrl()).into(holder.imageView);
 
-        holder.close_card.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("uploads")
-                        .child("basket").child(user.getUid()).child(" ");
-                mPostReference.removeValue();
+        final int totalPrice = ((Integer.valueOf(basketList.get(position).getPrice())));
+        count = count+totalPrice;
+        Toast.makeText(context, " Сумма блюд "+ count+ " cом", Toast.LENGTH_SHORT).show();
 
-            }
-        });
+        final int[] amountCounter = {1};
 
         holder.txt_plus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,13 +76,41 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
                         .getInstance()
                         .getReference("uploads")
                         .child("basket")
-                        .child(user.getUid())
-                        .child("amount");
-                
+                        .child(user.getUid());
+
+                reference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        List<AddToBasket> addToBasketList = (List<AddToBasket>) dataSnapshot.getValue();
+                        int size = addToBasketList.size();
+                        amountCounter[0]++;
+                        for (int i = 0; i < size; i++){
+                            if (addToBasketList.get(i).getmName().equals(basketList.get(position).getmName())){
+                                basketList.get(position).setAmount(String.valueOf(amountCounter[0]));
+                            }
+                        }
+
+//                        Toast.makeText(context, addToBasketList, Toast.LENGTH_LONG).show();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+
+
+
                 CharSequence zz = holder.txt_amount.getText();
                 int pz= Integer.valueOf(zz.toString());
                 pz++;
                 holder.txt_amount.setText(Integer.toString(pz));
+//                holder.txt_amount.setText(reference.toString());
+
+
             }
         });
         holder.txt_minus.setOnClickListener(new View.OnClickListener() {
@@ -108,18 +136,18 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
         public TextView txt_name, txt_price, txt_amount, txt_minus, txt_plus;
         public ImageView imageView;
         public CardView cardView, close_card;
+        public EditText count;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
 
             txt_name = itemView.findViewById(R.id.title_basket);
             txt_price = itemView.findViewById(R.id.price_basket);
-            txt_amount = itemView.findViewById(R.id.txt_count);
+            txt_amount = itemView.findViewById(R.id.txt_count_basket);
             imageView = itemView.findViewById(R.id.img_basket);
             cardView = itemView.findViewById(R.id.card_basket);
             txt_minus = itemView.findViewById(R.id.txt_minus);
             txt_plus = itemView.findViewById(R.id.txt_plus);
-            close_card = itemView.findViewById(R.id.close_card);
 //            btn = itemView.findViewById(R.id.btn_order);
         }
     }

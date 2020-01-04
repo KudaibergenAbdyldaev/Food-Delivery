@@ -5,6 +5,7 @@ public class FavouriteModel {
     private String mName;
     private String price;
     private String imageUrl;
+    private String amount;
 
     public FavouriteModel(String mName, String price, String imageUrl) {
         this.mName = mName;
@@ -39,4 +40,11 @@ public class FavouriteModel {
         this.imageUrl = imageUrl;
     }
 
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
+    }
 }

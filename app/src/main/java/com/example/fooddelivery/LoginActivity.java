@@ -58,11 +58,11 @@ public class LoginActivity extends AppCompatActivity {
                 String txt_password = edt_password.getText().toString();
 
                 if(TextUtils.isEmpty(edt_email.getText().toString())){
-                    Toast.makeText(LoginActivity.this, "Пожалуйста ведите ваш email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Пожалуйста введите ваш email", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else if(TextUtils.isEmpty(edt_email.getText().toString())){
-                    Toast.makeText(LoginActivity.this, "Пожалуйста ведите пароль", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Пожалуйста введите пароль", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else{

@@ -3,6 +3,7 @@ package com.example.fooddelivery.Fragments;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -45,7 +49,7 @@ public class BasketFragment extends Fragment {
     private List<AddToBasket> addToBasketsList;
     private List<UserInfo> infos;
     FirebaseUser user;
-    TextView title,amount,price;
+    TextView title,amount,price, summa;
     ImageView imageView;
     Button button_order;
     final String[] addressToDeliver = new String[1];
@@ -62,11 +66,12 @@ public class BasketFragment extends Fragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).setTitle("Оформить заказ");
 
+
+
         recyclerView =(RecyclerView) view.findViewById(R.id.recycler_view_basket);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         user = FirebaseAuth.getInstance().getCurrentUser();
-
 
         final DatabaseReference reference = FirebaseDatabase
                 .getInstance()
@@ -81,11 +86,8 @@ public class BasketFragment extends Fragment {
                 addressToDeliver[0] = userInfo.getAddress();
                 clientName[0] = userInfo.getUsername();
                 clientPhone[0] = userInfo.getPhone();
-
                 getFirstCategory(addressToDeliver[0], clientName[0], clientPhone[0]);
 
-
-//                Toast.makeText(getContext(), "address: " + addressToDeliver[0], Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -94,7 +96,6 @@ public class BasketFragment extends Fragment {
             }
         });
 
-        getClientData();
 
         title = (TextView) view.findViewById(R.id.title_basket);
         amount = (TextView) view.findViewById(R.id.txt_count);
@@ -113,25 +114,27 @@ public class BasketFragment extends Fragment {
         return view;
     }
 
-    private void getClientData(){
 
-    }
 
     private void orderNow() {
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Order");
 //        String userId = databaseReference.push().getKey();
-
 
         reference.child(user.getUid())
                 .setValue(addToBasketsList)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+                        DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("uploads")
+                                .child("basket").child(user.getUid());
+                        mPostReference.removeValue();
                         Toast.makeText(getActivity(), "Блюдо заказано", Toast.LENGTH_SHORT).show();
                     }
                 });
+
     }
 
     private void getFirstCategory(final String address, final String name, final String phone){
@@ -144,15 +147,17 @@ public class BasketFragment extends Fragment {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     AddToBasket addToBasket = postSnapshot.getValue(AddToBasket.class);
 //                    assert addToBasket != null;
-//                    Toast.makeText(getContext(),"Address to deliver: "+ addressToDeliver[0], Toast.LENGTH_LONG).show();
                     addToBasket.setAddressToDeliver(address);
                     addToBasket.setClientName(name);
                     addToBasket.setClientPhone(phone);
-
+                    addToBasket.setAmount("1");
                     addToBasketsList.add(addToBasket);
                 }
                 BasketAdapter adapter = new BasketAdapter(getContext(), addToBasketsList);
 
+
+
+//                summa.setText(String.valueOf(adapter.count));
                 recyclerView.setAdapter(adapter);
             }
 
@@ -163,4 +168,28 @@ public class BasketFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.close_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.delete_item){
+            FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+            DatabaseReference mPostReference = FirebaseDatabase.getInstance().getReference("uploads")
+                    .child("basket").child(user.getUid());
+            mPostReference.removeValue();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
