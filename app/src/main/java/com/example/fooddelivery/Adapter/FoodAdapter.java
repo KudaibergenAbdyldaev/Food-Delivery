@@ -128,6 +128,15 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
 
                 addToBasket.setAmount("1");
 
+//                Model model = new Model(
+//                        edtTime.getText().toString(),
+//                        edtBook.getText().toString()
+//                );
+//                users.child(model.getTime())
+//                        .setValue(model)
+//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                            @Override
+//                        });
                 products.add(addToBasket);
                 reference.child(user.getUid())
                         .setValue(products)

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FoodDelivery</string>
+    <string name="app_name">ProductDelivery</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="facebook_app_id">500701800565644</string>
     <string name="fb_login_protocol_scheme">fb500701800565644</string>

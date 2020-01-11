@@ -54,7 +54,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Holder> 
 
     public class Holder extends RecyclerView.ViewHolder {
 
-        public TextView txt_name, txt_price, txt_amount;
+        public TextView txt_name, txt_price;
         public ImageView imageView;
         public CardView cardView;
 
@@ -62,7 +62,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.Holder> 
             super(itemView);
             txt_name = itemView.findViewById(R.id.title_basket);
             txt_price = itemView.findViewById(R.id.price_basket);
-            txt_amount = itemView.findViewById(R.id.txt_count);
             imageView = itemView.findViewById(R.id.img_basket);
             cardView = itemView.findViewById(R.id.card_basket);
         }

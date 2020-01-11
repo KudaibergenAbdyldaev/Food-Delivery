@@ -14,6 +14,7 @@ import com.example.fooddelivery.DetailActivity;
 import com.example.fooddelivery.Fragments.BasketFragment;
 import com.example.fooddelivery.Models.AddToBasket;
 import com.example.fooddelivery.R;
+import com.google.android.gms.common.internal.Constants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -77,32 +78,28 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
                         .getReference("uploads")
                         .child("basket")
                         .child(user.getUid());
-
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        List<AddToBasket> addToBasketList = (List<AddToBasket>) dataSnapshot.getValue();
-                        int size = addToBasketList.size();
-                        amountCounter[0]++;
-                        for (int i = 0; i < size; i++){
-                            if (addToBasketList.get(i).getmName().equals(basketList.get(position).getmName())){
-                                basketList.get(position).setAmount(String.valueOf(amountCounter[0]));
-                            }
-                        }
-
-//                        Toast.makeText(context, addToBasketList, Toast.LENGTH_LONG).show();
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-
-
+//                reference.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+////                        List<AddToBasket> addToBasketList = (List<AddToBasket>) dataSnapshot.getValue();
+////                        int size = addToBasketList.size();
+////                        amountCounter[0]++;
+////                        for (int i = 0; i < size; i++){
+////                            if (addToBasketList.get(i).getmName().equals(basketList.get(position).getmName())){
+////                                basketList.get(position).setAmount(String.valueOf(amountCounter[0]));
+////                            }
+////                        }
+//
+////                        Toast.makeText(context, addToBasketList, Toast.LENGTH_LONG).show();
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                    }
+//                });
 
                 CharSequence zz = holder.txt_amount.getText();
                 int pz= Integer.valueOf(zz.toString());

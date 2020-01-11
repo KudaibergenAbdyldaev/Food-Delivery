@@ -47,9 +47,8 @@ public class BasketFragment extends Fragment {
     private RecyclerView recyclerView;
     private DatabaseReference databaseReference;
     private List<AddToBasket> addToBasketsList;
-    private List<UserInfo> infos;
     FirebaseUser user;
-    TextView title,amount,price, summa;
+    TextView title,amount,price;
     ImageView imageView;
     Button button_order;
     final String[] addressToDeliver = new String[1];
@@ -121,9 +120,10 @@ public class BasketFragment extends Fragment {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Order");
 //        String userId = databaseReference.push().getKey();
+        AddToBasket basket = new AddToBasket();
 
         reference.child(user.getUid())
-                .setValue(addToBasketsList)
+                .setValue(addToBasketsList, basket.getClientName())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

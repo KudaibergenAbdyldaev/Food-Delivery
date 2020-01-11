@@ -46,7 +46,7 @@ public class MenuFragment extends Fragment {
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).setTitle("Food Delivery");
+        ((AppCompatActivity)getActivity()).setTitle("Product Delivery");
 
         card_history = (CardView) view.findViewById(R.id.card_history);
         card_history.setOnClickListener(new View.OnClickListener() {

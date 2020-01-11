@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
 
         Toolbar toolbar = view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity)getActivity()).setTitle("Food Delivery");
+        ((AppCompatActivity)getActivity()).setTitle("Product Delivery");
 
         recyclerView =(RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
