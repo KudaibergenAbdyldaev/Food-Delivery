@@ -31,6 +31,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -120,26 +121,19 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
                 user = FirebaseAuth.getInstance().getCurrentUser();
                 storageReference = FirebaseStorage.getInstance().getReference("uploads").child("basket");
                 reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket");
-                AddToBasket addToBasket = new AddToBasket(
-                        uploadList.get(position).getmName(),
-                        uploadList.get(position).getPrice(),
-                        uploadList.get(position).getmImageUrl()
-                );
 
-                addToBasket.setAmount("1");
+                String key = reference.push().getKey();
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", key);
+                map.put("mName",uploadList.get(position).getmName());
+                map.put("price",uploadList.get(position).getPrice());
+                map.put("imageUrl",uploadList.get(position).getmImageUrl());
+                map.put("amount", "1");
 
-//                Model model = new Model(
-//                        edtTime.getText().toString(),
-//                        edtBook.getText().toString()
-//                );
-//                users.child(model.getTime())
-//                        .setValue(model)
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                        });
-                products.add(addToBasket);
+                String uploadId = reference.push().getKey();
                 reference.child(user.getUid())
-                        .setValue(products)
+                        .child(uploadId)
+                        .setValue(map)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -157,15 +151,21 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodHolder> {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 storageReference = FirebaseStorage.getInstance().getReference("uploads").child("favourite");
                 reference = FirebaseDatabase.getInstance().getReference("uploads").child("favourite");
-                FavouriteModel favouriteModel = new FavouriteModel(
-                        uploadList.get(position).getmName(),
-                        uploadList.get(position).getPrice(),
-                        uploadList.get(position).getmImageUrl()
-                );
-                favouriteModelList.add(favouriteModel);
+
+
+                String key = reference.push().getKey();
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", key);
+                map.put("mName",uploadList.get(position).getmName());
+                map.put("price",uploadList.get(position).getPrice());
+                map.put("imageUrl",uploadList.get(position).getmImageUrl());
+                map.put("amount", "1");
+
+                String uploadId = reference.push().getKey();
                 if (!products.isEmpty()) {
                     reference.child(user.getUid())
-                            .setValue(favouriteModelList)
+                            .child(uploadId)
+                            .setValue(map)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
