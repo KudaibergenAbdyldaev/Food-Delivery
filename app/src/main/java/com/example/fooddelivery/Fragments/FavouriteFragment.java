@@ -42,8 +42,8 @@ public class FavouriteFragment extends Fragment {
     private RecyclerView recyclerView;
     private FavouriteAdapter adapter;
     private DatabaseReference databaseReference;
-    private List<FavouriteModel> uploadList;
-
+    private List<FavouriteModel> uploadList = new ArrayList<>();;
+    private ValueEventListener mDBListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,28 +54,28 @@ public class FavouriteFragment extends Fragment {
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).setTitle("Избранные");
 
-
+        final List<FavouriteModel> finalUploadList = uploadList;
         recyclerView =(RecyclerView) view.findViewById(R.id.recycler_view_fr);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        adapter = new FavouriteAdapter(getActivity(), finalUploadList);
 
-        uploadList = new ArrayList<>();
+        recyclerView.setAdapter(adapter);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         databaseReference = FirebaseDatabase.getInstance().getReference("uploads").child("favourite").child(user.getUid());
 
-        final List<FavouriteModel> finalUploadList = uploadList;
-        databaseReference.addValueEventListener(new ValueEventListener() {
+
+        mDBListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                uploadList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     FavouriteModel upload = postSnapshot.getValue(FavouriteModel.class);
+                    upload.setKey(postSnapshot.getKey());
                     finalUploadList.add(upload);
                 }
-
-                adapter = new FavouriteAdapter(getActivity(), finalUploadList);
-
-                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -111,4 +111,11 @@ public class FavouriteFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        databaseReference.removeEventListener(mDBListener);
+    }
+
 }

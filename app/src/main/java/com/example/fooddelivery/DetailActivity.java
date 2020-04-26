@@ -38,7 +38,9 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DetailActivity extends AppCompatActivity {
     TextView title, overView, price,txt_count;
@@ -114,22 +116,28 @@ public class DetailActivity extends AppCompatActivity {
 
         storageReference = FirebaseStorage.getInstance().getReference("uploads").child("basket");
         reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket");
-        AddToBasket addToBasket = new AddToBasket(
-                title.getText().toString(),
-                price.getText().toString(),
-                image_url
-        );
 
-        addToBasket.setAmount("1");
+        String key = reference.push().getKey();
+        Map<String, Object> map = new HashMap<>();
+        map.put("id", key);
+        map.put("mName",title.getText().toString());
+        map.put("price",price.getText().toString());
+        map.put("imageUrl", image_url);
+        map.put("amount", "1");
 
-        products.add(addToBasket);
-        reference.child(user.getUid())
-                .setValue(products)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(DetailActivity.this, "Блюдо добавлено в корзину", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        String uploadId = reference.push().getKey();
+        if (!products.isEmpty()) {
+            reference.child(user.getUid())
+                    .child(uploadId)
+                    .setValue(map)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(DetailActivity.this, "Блюдо добавлено в избранные", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(DetailActivity.this, "Basket is empty", Toast.LENGTH_SHORT).show();
+        }
     }
 }

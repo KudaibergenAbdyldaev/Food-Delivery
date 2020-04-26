@@ -2,10 +2,19 @@ package com.example.fooddelivery.Models;
 
 public class FavouriteModel {
 
+    private String key;
     private String mName;
     private String price;
     private String imageUrl;
     private String amount;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public FavouriteModel(String mName, String price, String imageUrl) {
         this.mName = mName;

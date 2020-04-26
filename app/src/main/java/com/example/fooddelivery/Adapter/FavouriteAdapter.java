@@ -30,7 +30,9 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static androidx.core.content.ContextCompat.getColor;
 
@@ -54,14 +56,13 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_favourite, parent, false);
         user = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket").child(user.getUid());
+        final DatabaseReference reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket").child(user.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 products.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     FavouriteModel addToBasket = postSnapshot.getValue(FavouriteModel.class);
-
 
                     products.add(addToBasket);
                 }
@@ -87,35 +88,55 @@ public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.Hold
                 .centerCrop()
                 .into(holder.imageView);
 
-        holder.card_add_product.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                holder.card_add_product.setCardBackgroundColor(getColor(context, R.color.colorPrimary));
-                holder.img_plus.setColorFilter(getColor(context, R.color.white));
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                storageReference = FirebaseStorage.getInstance().getReference("uploads").child("basket");
-                reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket");
-                FavouriteModel addToBasket = new FavouriteModel(
-                        uploadList.get(position).getmName(),
-                        uploadList.get(position).getPrice(),
-                        uploadList.get(position).getImageUrl()
-                );
-                addToBasket.setAmount("1");
+        {
+            holder.card_add_product.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    holder.card_add_product.setCardBackgroundColor(getColor(context, R.color.colorPrimary));
+                    holder.img_plus.setColorFilter(getColor(context, R.color.white));
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    storageReference = FirebaseStorage.getInstance().getReference("uploads").child("basket");
+                    reference = FirebaseDatabase.getInstance().getReference("uploads").child("basket");
 
-                products.add(addToBasket);
-                if (!products.isEmpty()) {
-                    reference.child(user.getUid())
-                            .setValue(products)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    Toast.makeText(context, "Блюдо добавлено в корзину", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                } else {
-                    Toast.makeText(context, "Basket is empty", Toast.LENGTH_SHORT).show();
+                    String key = reference.push().getKey();
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("id", key);
+                    map.put("mName",uploadList.get(position).getmName());
+                    map.put("price",uploadList.get(position).getPrice());
+                    map.put("imageUrl",uploadList.get(position).getImageUrl());
+                    map.put("amount", "1");
+
+                    String uploadId = reference.push().getKey();
+                    if (!products.isEmpty()) {
+                        reference.child(user.getUid())
+                                .child(uploadId)
+                                .setValue(map)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(context, "Блюдо добавлено в избранные", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    } else {
+                        Toast.makeText(context, "Basket is empty", Toast.LENGTH_SHORT).show();
+                    }
+
                 }
+            });
+        }
 
+        holder.card_favourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                reference = FirebaseDatabase.getInstance()
+                        .getReference("uploads")
+                        .child("favourite")
+                        .child(user.getUid())
+                        .child(uploadCurrent.getKey());
+                reference.removeValue();
             }
         });
 

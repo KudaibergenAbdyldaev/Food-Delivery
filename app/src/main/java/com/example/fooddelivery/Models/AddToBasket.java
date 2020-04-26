@@ -1,7 +1,10 @@
 package com.example.fooddelivery.Models;
 
+import com.google.firebase.database.Exclude;
+
 public class AddToBasket {
 
+    private String key;
     private String mName;
     private String price;
     private String imageUrl;
@@ -17,6 +20,15 @@ public class AddToBasket {
     }
 
     public AddToBasket() {
+    }
+
+    @Exclude
+    public String getKey() {
+        return key;
+    }
+    @Exclude
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getAddressToDeliver() {

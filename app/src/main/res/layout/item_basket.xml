@@ -133,5 +133,6 @@
 <!--                android:textColor="@color/white"-->
 <!--                android:inputType="textPersonName" />-->
         </RelativeLayout>
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -2,7 +2,10 @@ package com.example.fooddelivery.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -23,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +43,8 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
 
     private Context context;
     private List<AddToBasket> basketList;
-    public int count;
+    private int count;
+    private OnItemClickListener mListener;
 
     public BasketAdapter(Context context, List<AddToBasket> basketList) {
         this.context = context;
@@ -61,62 +66,30 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
         holder.txt_amount.setText(addToBasket.getAmount());
         Picasso.get().load(basketList.get(position).getImageUrl()).into(holder.imageView);
 
-        final int totalPrice = ((Integer.valueOf(basketList.get(position).getPrice())));
+        final int totalPrice = ((Integer.parseInt(basketList.get(position).getPrice())));
         count = count+totalPrice;
         Toast.makeText(context, " Сумма блюд "+ count+ " cом", Toast.LENGTH_SHORT).show();
-
-        final int[] amountCounter = {1};
 
         holder.txt_plus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                DatabaseReference reference = FirebaseDatabase
-                        .getInstance()
-                        .getReference("uploads")
-                        .child("basket")
-                        .child(user.getUid());
-//                reference.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-////                        List<AddToBasket> addToBasketList = (List<AddToBasket>) dataSnapshot.getValue();
-////                        int size = addToBasketList.size();
-////                        amountCounter[0]++;
-////                        for (int i = 0; i < size; i++){
-////                            if (addToBasketList.get(i).getmName().equals(basketList.get(position).getmName())){
-////                                basketList.get(position).setAmount(String.valueOf(amountCounter[0]));
-////                            }
-////                        }
-//
-////                        Toast.makeText(context, addToBasketList, Toast.LENGTH_LONG).show();
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                    }
-//                });
-
                 CharSequence zz = holder.txt_amount.getText();
-                int pz= Integer.valueOf(zz.toString());
+                int pz= Integer.parseInt(zz.toString());
                 pz++;
                 holder.txt_amount.setText(Integer.toString(pz));
-//                holder.txt_amount.setText(reference.toString());
-
-
             }
         });
         holder.txt_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CharSequence zz = holder.txt_amount.getText();
-                int pz= Integer.valueOf(zz.toString());
+                int pz= Integer.parseInt(zz.toString());
                 pz--;
                 holder.txt_amount.setText(Integer.toString(pz));
+//                if (pz <-1){
+//
+//                }
             }
         });
 
@@ -127,13 +100,12 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
         return basketList.size();
     }
 
-    public class Holder extends RecyclerView.ViewHolder {
+    public class Holder extends RecyclerView.ViewHolder implements View.OnClickListener,
+            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
-//        public Button btn;
-        public TextView txt_name, txt_price, txt_amount, txt_minus, txt_plus;
-        public ImageView imageView;
-        public CardView cardView, close_card;
-        public EditText count;
+        TextView txt_name, txt_price, txt_amount, txt_minus, txt_plus;
+        ImageView imageView;
+        CardView cardView;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -145,7 +117,53 @@ public class BasketAdapter extends RecyclerView.Adapter<BasketAdapter.Holder> {
             cardView = itemView.findViewById(R.id.card_basket);
             txt_minus = itemView.findViewById(R.id.txt_minus);
             txt_plus = itemView.findViewById(R.id.txt_plus);
-//            btn = itemView.findViewById(R.id.btn_order);
+
+            itemView.setOnClickListener(this);
+            itemView.setOnCreateContextMenuListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    mListener.onItemClick(position);
+                }
+            }
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem item) {
+            if (mListener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    if (item.getItemId() == 1) {
+                        mListener.onDeleteClick(position);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            menu.setHeaderTitle("Выберите действие");
+            MenuItem delete = menu.add(Menu.NONE, 1, 1, "Удалить?");
+
+            delete.setOnMenuItemClickListener(this);
         }
     }
+
+    public interface OnItemClickListener {
+
+        void onItemClick(int position);
+
+        void onDeleteClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
 }
